@@ -89,7 +89,8 @@ public class Hand {
     }
 
     public Iterator<Card> suitIterator(String suit) {
-        return (Iterator<Card>) new SuitIterator(suit);
+        int suitIndex = getSuitIndex(suit);
+        return new SuitIterator(suitIndex, suits[suitIndex]);
     }
 
     private int getSuitIndex(String suit) {
@@ -104,6 +105,21 @@ public class Hand {
                 return 3;
             default:
                 return -1;
+        }
+    }
+
+    private String getSuit(int suitIndex) {
+        switch (suitIndex) {
+            case 0:
+                return "Hearts";
+            case 1:
+                return "Clubs";
+            case 2:
+                return "Spades";
+            case 3:
+                return "Diamonds";
+            default:
+                return null;
         }
     }
 
@@ -132,26 +148,32 @@ public class Hand {
         }
     }
 
-    public class SuitIterator {
+    private class SuitIterator implements Iterator<Card> {
 
         private int suitIndex;
-        private Node currentSuit;
+        private Node current;
 
-        public SuitIterator(String suit) {
-            this.suitIndex = getSuitIndex(suit);
-            this.currentSuit = suits[suitIndex];
+        public SuitIterator(int suitIndex, Node head) {
+            this.suitIndex = suitIndex;
+            this.current = head;
+            while (current != null && !current.card.getSuit().equals(getSuit(suitIndex))) {
+                current = current.next;
+            }
         }
 
         public boolean hasNext() {
-            return currentSuit != null;
+            return current != null;
         }
 
         public Card next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
-            Card card = currentSuit.card;
-            currentSuit = currentSuit.next;
+            Card card = current.card;
+            current = current.next;
+            while (current != null && !current.card.getSuit().equals(getSuit(suitIndex))) {
+                current = current.next;
+            }
             return card;
         }
     }
