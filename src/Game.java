@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Game {
     private final int numberOfPlayers;
     private final Hand[] hands;
@@ -25,11 +28,11 @@ public class Game {
                 }
             }
             System.out.println("Hands after deal " + (i + 1) + ":");
-            displayHands();
+            iterator();
         }
     }
 
-    public void displayHands() {
+    public void iterator() {
         int[][] suitOrder = new int[numberOfPlayers][4];
         for (int i = 0; i < numberOfPlayers; i++) {
             Hand hand = hands[i];
@@ -47,27 +50,31 @@ public class Game {
         for (int i = 0; i < numberOfPlayers; i++) {
             System.out.print("Player " + (i + 1) + ": " );
             Hand hand = hands[i];
-            int[] suitOrderForPlayer = suitOrder[i];
+            List<Card>[] sortedSuits = new List[4];
             for (int j = 0; j < 4; j++) {
-                int suitIndex = suitOrderForPlayer[j] - 1;
-                if (suitIndex >= 0) {
-                    Card card = hand.getCard(suitIndex);
+                sortedSuits[j] = new ArrayList<>();
+            }
+            for (int j = 0; j < hand.getSize(); j++) {
+                Card card = hand.getCard(j);
+                String suit = card.getSuit();
+                int suitIndex = hand.getSuitIndex(suit);
+                sortedSuits[suitIndex].add(card);
+            }
+            for (int j = 0; j < 4; j++) {
+                List<Card> suitCards = sortedSuits[j];
+                suitCards.sort((c1, c2) -> Integer.compare(c1.getRank(), c2.getRank()));
+                for (Card card : suitCards) {
                     System.out.print(card.getRank() + "-" + card.getSuit() + ", ");
                 }
-                int endIndex = ((j == 3) ? hand.getSize() : suitOrderForPlayer[j + 1] - 1);
-                Hand suitHand = new Hand();
-                for (int k = suitIndex + 1; k < endIndex; k++) {
-                    Card card = hand.getCard(k);
-                    if (card.getSuit().equals(hand.getSuit(j))) {
-                        suitHand.addACard(card.getRank(), card.getSuit());
-                    }
-                }
-                suitHand.sortByRank();
-                System.out.print(suitHand+" ");
             }
             System.out.println();
         }
         System.out.println();
-
+    }
+}
+class Runner {
+    public static void main(String[] args) {
+        Game game = new Game(4);
+        game.play();
     }
 }

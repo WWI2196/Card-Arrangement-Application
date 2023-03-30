@@ -14,16 +14,4 @@ public class Card{
     public String getSuit() {
         return suit;
     }
-
-    public String toString() {
-        String rankToString = switch (rank) {
-            case 11 -> "Jack";
-            case 12 -> "Queen";
-            case 13 -> "King";
-            case 14 -> "Ace";
-            default -> Integer.toString(rank);
-        };
-
-        return rankToString + " of " + suit;
-    }
 }
