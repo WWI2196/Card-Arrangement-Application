@@ -51,27 +51,9 @@ public class Hand {
         return current.card;
     }
 
-    public void sortByRank() {
-        for (CardHolder suit : suits) {
-            CardHolder current = suit;
-            while (current != null) {
-                CardHolder next = current.next;
-                while (next != null) {
-                    if (current.card.getRank() > next.card.getRank()) {
-                        Card temp = current.card;
-                        current.card = next.card;
-                        next.card = temp;
-                    }
-                    next = next.next;
-                }
-                current = current.next;
-            }
-        }
-    }
-
     public Card playACard(String suit) {
         int suitIndex = getSuitIndex(suit);
-        if (cardsInSuit[suitIndex] == 0) { // No cards of that suit in hand
+        if (cardsInSuit[suitIndex] == 0) {
             return removeRandomCard();
 
         }else {
@@ -81,9 +63,9 @@ public class Hand {
                 previous = current;
                 current = current.next;
             }
-            if (previous == null) { // Card is at the beginning of the list
+            if (previous == null) {
                 suits[suitIndex] = current.next;
-            } else { // Card is in the middle or end of the list
+            } else {
                 previous.next = current.next;
             }
             cardsInSuit[suitIndex]--;
@@ -104,7 +86,7 @@ public class Hand {
             previous = current;
             current = current.next;
         }
-        if (previous == null) { // Only one card in hand
+        if (previous == null) {
             for (int y = 0; y < 4; y++) {
                 if (suits[y] != null) {
                     current = suits[y];
@@ -113,7 +95,7 @@ public class Hand {
                     break;
                 }
             }
-        } else { // Remove last card in hand
+        } else {
             previous.next = null;
         }
         cardsInHand--;
@@ -130,17 +112,4 @@ public class Hand {
             default -> -1;
         };
     }
-
-    public String getSuit(int suitIndex) {
-        return switch (suitIndex) {
-            case 0 -> "Hearts";
-            case 1 -> "Clubs";
-            case 2 -> "Spades";
-            case 3 -> "Diamonds";
-            default -> null;
-        };
-    }
-
-
-
 }
