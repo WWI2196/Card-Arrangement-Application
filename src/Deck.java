@@ -1,27 +1,37 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Random;
 
 public class Deck {
-    private List<Card> cards;
+    Card[] cards;
+    int size;
 
     public Deck() {
-        this.cards = new ArrayList<>();
-        for (String suit : new String[]{"hearts", "clubs", "spades", "diamonds"}) {
-            for (String rank : new String[]{"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"}) {
-                cards.add(new Card(rank, suit));
+        this.cards = new Card[52];
+        this.size = 0;
+        for (String suit : new String[]{"Hearts", "Clubs", "Spades", "Diamonds"}) {
+            for (int rank : new int[]{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}) {
+                cards[size] = new Card(rank, suit);
+                size++;
             }
         }
     }
 
     public void shuffle() {
-        Collections.shuffle(cards);
+        Random random = new Random();
+        for (int i = size -1 ; i >0 ; i--) {
+            int j = random.nextInt(i+1);
+            Card temp = cards[i];
+            cards[i] = cards[j];
+            cards[j] = temp;
+        }
     }
 
     public Card dealCard() {
-        if (cards.size() == 0) {
+        if (size == 0) {
             return null;
         }
-        return cards.remove(0);
+        Card card = cards[size - 1];
+        cards[size - 1] = null;
+        size--;
+        return card;
     }
 }

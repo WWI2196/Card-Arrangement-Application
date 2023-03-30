@@ -14,13 +14,6 @@ public class Card{
     public String getSuit() {
         return suit;
     }
-    public int compareTo(Card antherCard) {
-        if (this.rank == antherCard.rank) {
-            return this.suit.compareTo(antherCard.suit);
-        } else {
-            return Integer.compare(this.rank, antherCard.rank);
-        }
-    }
 
     public String toString() {
         String rankToString = switch (rank) {
