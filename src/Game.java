@@ -1,9 +1,9 @@
 import java.util.Scanner;
 
 public class Game {
-     private final int numberOfPlayers;
-     Hand[] hands;
-     Deck deck;
+    int numberOfPlayers;
+    Hand[] hands;
+    Deck deck;
 
     public Game(int numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
@@ -16,7 +16,7 @@ public class Game {
 
     public void play() {
         deck.shuffle();
-        int numCards = deck.size / numberOfPlayers;
+        int numberOfCards = deck.size / numberOfPlayers;
         String[][] suitsReceived = new String[numberOfPlayers][];
         Hand[] hands = new Hand[numberOfPlayers];
 
@@ -24,7 +24,7 @@ public class Game {
             hands[i] = new Hand();
         }
 
-        for (int i = 0; i < numCards; i++) {
+        for (int i = 0; i < numberOfCards; i++) {
             for (int j = 0; j < numberOfPlayers; j++) {
                 Card card = deck.dealCard();
                 if (card != null) {
@@ -93,11 +93,11 @@ public class Game {
             Hand hand = hands[i];
             Card[] sortedCards = new Card[hand.getSize()];
             int index = 0;
-            String[] suitOrder = suitsReceived[i];
-            if (suitOrder == null) {
-                suitOrder = new String[0];
+            String[] order = suitsReceived[i];
+            if (order == null) {
+                order = new String[0];
             }
-            for (String suit : suitOrder) {
+            for (String suit : order) {
                 for (int j = 2; j <= 14; j++) {
                     for (int k = 0; k < hand.getSize(); k++) {
                         Card card = hand.getCard(k);
@@ -119,17 +119,17 @@ public class Game {
     public void playACard(String suit, Hand[] hands) {
         for (int i = 0; i < numberOfPlayers; i++) {
             Hand hand = hands[i];
-            boolean suitFound = false;
+            boolean suitExist = false;
             for (int j = 0; j < hand.getSize(); j++) {
                 Card card = hand.getCard(j);
                 if (card.getSuit().equals(suit)) {
-                    suitFound = true;
+                    suitExist = true;
                     hand.removeCard(j);
                     System.out.println("Player " + (i + 1) + " plays " + card.getRank() + "-" + card.getSuit() + ".");
                     break;
                 }
             }
-            if (!suitFound) {
+            if (!suitExist) {
                 int randomCardIndex = (int) (Math.random() * hand.getSize());
                 Card randomCard = hand.removeCard(randomCardIndex);
                 System.out.println("Player does not have a card in " + suit + ". Player " + (i + 1) + " plays " + randomCard.getRank() + "-" + randomCard.getSuit() + ".");
