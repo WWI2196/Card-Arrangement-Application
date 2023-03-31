@@ -79,27 +79,29 @@ public class Hand {
         return current.card;
     }
 
-    public Card removeACard(String suit) {
-        int suitIndex = getSuitIndex(suit);
-        if (cardsInSuit[suitIndex] == 0) {
-            return removeRandomCard();
-        } else {
-            CardHolder previous = null;
-            CardHolder current = suits[suitIndex];
-            while (!current.card.getSuit().equals(suit)) {
-                previous = current;
-                current = current.next;
-            }
-            if (previous == null) {
-                suits[suitIndex] = current.next;
-            } else {
-                previous.next = current.next;
-            }
-            cardsInSuit[suitIndex]--;
-            cardsInHand--;
-            return current.card;
+    public Card removeCard(int index) {
+        if (index < 0 || index >= cardsInHand) {
+            throw new NoSuchElementException();
         }
-
+        int suitIndex = 0;
+        while (index >= cardsInSuit[suitIndex]) {
+            index -= cardsInSuit[suitIndex];
+            suitIndex++;
+        }
+        CardHolder previous = null;
+        CardHolder current = suits[suitIndex];
+        for (int i = 0; i < index; i++) {
+            previous = current;
+            current = current.next;
+        }
+        if (previous == null) {
+            suits[suitIndex] = current.next;
+        } else {
+            previous.next = current.next;
+        }
+        cardsInSuit[suitIndex]--;
+        cardsInHand--;
+        return current.card;
     }
 
     public int getSuitIndex(String suit) {

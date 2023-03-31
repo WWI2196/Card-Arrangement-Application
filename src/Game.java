@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Game {
     private final int numberOfPlayers;
     private final Hand[] hands;
@@ -52,8 +54,13 @@ public class Game {
             System.out.println("Hands after deal " + (i + 1) + ":");
             printHands(suitsReceived, hands);
         }
-        playACard("Hearts",hands);
-
+        do {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Enter the suit to play: ");
+            String suit = scanner.nextLine();
+            playACard(suit, hands);
+            System.out.println();
+        }while (true);
     }
 
     private void printHands(String[][] suitsReceived, Hand[] hands) {
@@ -85,11 +92,32 @@ public class Game {
         System.out.println();
     }
 
-    public void playACard(String suit,Hand[] hands){
-        // Remove and return a card of suit from the player’s hand; if there is no card of suit s, then remove and return an arbitrary card from the hand.
-
-
+    public void playACard(String suit, Hand[] hands) {
+        boolean suitFound = false;
+        for (int i = 0; i < numberOfPlayers; i++) {
+            Hand hand = hands[i];
+            for (int j = 0; j < hand.getSize(); j++) {
+                Card card = hand.getCard(j);
+                if (card.getSuit().equals(suit)) {
+                    suitFound = true;
+                    hand.removeCard(j);
+                    System.out.println("Player " + (i + 1) + " plays " + card.getRank() + "-" + card.getSuit() + ".");
+                    break;
+                }
+            }
+        }
+        if (!suitFound) {
+            int randomPlayerIndex = (int) (Math.random() * numberOfPlayers);
+            Hand randomPlayerHand = hands[randomPlayerIndex];
+            int randomCardIndex = (int) (Math.random() * randomPlayerHand.getSize());
+            Card randomCard = randomPlayerHand.removeCard(randomCardIndex);
+            System.out.println("No player has a card of the suit " + suit + ". Player " + (randomPlayerIndex + 1) + " plays " + randomCard.getRank() + "-" + randomCard.getSuit() + ".");
+        }
     }
-
-
+}
+class Runner {
+    public static void main(String[] args) {
+        Game game = new Game(4);
+        game.play();
+    }
 }
