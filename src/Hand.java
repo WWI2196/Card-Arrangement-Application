@@ -51,30 +51,7 @@ public class Hand {
         return current.card;
     }
 
-    public Card playACard(String suit) {
-        int suitIndex = getSuitIndex(suit);
-        if (cardsInSuit[suitIndex] == 0) {
-            return removeRandomCard();
-
-        }else {
-            CardHolder previous = null;
-            CardHolder current = suits[suitIndex];
-            while (!current.card.getSuit().equals(suit)) {
-                previous = current;
-                current = current.next;
-            }
-            if (previous == null) {
-                suits[suitIndex] = current.next;
-            } else {
-                previous.next = current.next;
-            }
-            cardsInSuit[suitIndex]--;
-            cardsInHand--;
-            return current.card;
-        }
-    }
-
-    private Card removeRandomCard() {
+    public Card removeRandomCard() {
         CardHolder previous = null;
         CardHolder current;
         int i = 0;
@@ -102,6 +79,28 @@ public class Hand {
         return current.card;
     }
 
+    public Card removeACard(String suit) {
+        int suitIndex = getSuitIndex(suit);
+        if (cardsInSuit[suitIndex] == 0) {
+            return removeRandomCard();
+        } else {
+            CardHolder previous = null;
+            CardHolder current = suits[suitIndex];
+            while (!current.card.getSuit().equals(suit)) {
+                previous = current;
+                current = current.next;
+            }
+            if (previous == null) {
+                suits[suitIndex] = current.next;
+            } else {
+                previous.next = current.next;
+            }
+            cardsInSuit[suitIndex]--;
+            cardsInHand--;
+            return current.card;
+        }
+
+    }
 
     public int getSuitIndex(String suit) {
         return switch (suit) {

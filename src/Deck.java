@@ -17,8 +17,8 @@ public class Deck {
 
     public void shuffle() {
         Random random = new Random();
-        for (int i = size -1 ; i >0 ; i--) {
-            int j = random.nextInt(i+1);
+        for (int i = 0; i < size; i++) {
+            int j = random.nextInt(size);
             Card temp = cards[i];
             cards[i] = cards[j];
             cards[j] = temp;

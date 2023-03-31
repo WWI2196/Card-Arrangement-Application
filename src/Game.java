@@ -1,10 +1,11 @@
 public class Game {
     private final int numberOfPlayers;
+    private final Hand[] hands;
     private final Deck deck;
 
     public Game(int numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
-        Hand[] hands = new Hand[numberOfPlayers];
+        hands = new Hand[numberOfPlayers];
         for (int i = 0; i < numberOfPlayers; i++) {
             hands[i] = new Hand();
         }
@@ -51,8 +52,9 @@ public class Game {
             System.out.println("Hands after deal " + (i + 1) + ":");
             printHands(suitsReceived, hands);
         }
-    }
+        playACard("Hearts",hands);
 
+    }
 
     private void printHands(String[][] suitsReceived, Hand[] hands) {
         for (int i = 0; i < numberOfPlayers; i++) {
@@ -82,4 +84,12 @@ public class Game {
         }
         System.out.println();
     }
+
+    public void playACard(String suit,Hand[] hands){
+        // Remove and return a card of suit from the player’s hand; if there is no card of suit s, then remove and return an arbitrary card from the hand.
+
+
+    }
+
+
 }
