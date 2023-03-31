@@ -1,9 +1,9 @@
 import java.util.Scanner;
 
 public class Game {
-    private final int numberOfPlayers;
-    private final Hand[] hands;
-    private final Deck deck;
+     private final int numberOfPlayers;
+     Hand[] hands;
+     Deck deck;
 
     public Game(int numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
@@ -58,10 +58,32 @@ public class Game {
         printSortedHands(suitsReceived,hands);
         do {
             Scanner scanner = new Scanner(System.in);
-            System.out.print("Enter the suit to play: ");
-            String suit = scanner.nextLine();
-            playACard(suit, hands);
-            System.out.println();
+            System.out.println("""
+                    Enter your choice:
+                    1. play a card
+                    2. suit iterator
+                    3. exit""");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            if (choice == 3) {
+                break;
+            } else if (choice == 2) {
+                System.out.print("Enter the suit to iterate: ");
+                String suit = scanner.nextLine();
+                suitIterator(suit, hands);
+            }else if (choice == 1) {
+                do {
+                    System.out.print("Enter the suit to play: ");
+                    String input = scanner.nextLine();
+                    if (input.equals("Hearts") || input.equals("Clubs") || input.equals("Spades") || input.equals("Diamonds")) {
+                        playACard(input, hands);
+                        System.out.println();
+                    } else {
+                        break;
+                    }
+                }while (true);
+
+            }
         }while (true);
     }
 
@@ -127,10 +149,19 @@ public class Game {
         }
         System.out.println();
     }
-}
-class Execution {
-    public static void main(String[] args) {
-        Game game = new Game(4);
-        game.play();
+
+    public void suitIterator(String suit,Hand[] hands) {
+        for (int i = 0; i < numberOfPlayers; i++) {
+            System.out.print("Player " + (i + 1) + ": ");
+            Hand hand = hands[i];
+            for (int j = hand.getSize() - 1; j >= 0; j--) {
+                Card card = hand.getCard(j);
+                if (card.getSuit().equals(suit)) {
+                    System.out.print(card.getRank() + "-" + card.getSuit() + ", ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
     }
 }

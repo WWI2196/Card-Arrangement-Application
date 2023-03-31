@@ -51,34 +51,6 @@ public class Hand {
         return current.card;
     }
 
-    public Card removeRandomCard() {
-        CardHolder previous = null;
-        CardHolder current;
-        int i = 0;
-        do {
-            current = suits[i++];
-        } while (current == null);
-
-        while (current.next != null) {
-            previous = current;
-            current = current.next;
-        }
-        if (previous == null) {
-            for (int y = 0; y < 4; y++) {
-                if (suits[y] != null) {
-                    current = suits[y];
-                    suits[y] = null;
-                    cardsInSuit[y] = 0;
-                    break;
-                }
-            }
-        } else {
-            previous.next = null;
-        }
-        cardsInHand--;
-        return current.card;
-    }
-
     public Card removeCard(int index) {
         if (index < 0 || index >= cardsInHand) {
             throw new NoSuchElementException();
