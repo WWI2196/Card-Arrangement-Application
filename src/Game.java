@@ -52,8 +52,10 @@ public class Game {
                 }
             }
             System.out.println("Hands after deal " + (i + 1) + ":");
-            printHands(suitsReceived, hands);
+            iterator(hands);
         }
+        System.out.println("Hands after dealing all cards:");
+        printSortedHands(suitsReceived,hands);
         do {
             Scanner scanner = new Scanner(System.in);
             System.out.print("Enter the suit to play: ");
@@ -63,7 +65,7 @@ public class Game {
         }while (true);
     }
 
-    private void printHands(String[][] suitsReceived, Hand[] hands) {
+    private void printSortedHands(String[][] suitsReceived, Hand[] hands) {
         for (int i = 0; i < numberOfPlayers; i++) {
             System.out.print("Player " + (i + 1) + ": ");
             Hand hand = hands[i];
@@ -93,9 +95,9 @@ public class Game {
     }
 
     public void playACard(String suit, Hand[] hands) {
-        boolean suitFound = false;
         for (int i = 0; i < numberOfPlayers; i++) {
             Hand hand = hands[i];
+            boolean suitFound = false;
             for (int j = 0; j < hand.getSize(); j++) {
                 Card card = hand.getCard(j);
                 if (card.getSuit().equals(suit)) {
@@ -105,17 +107,28 @@ public class Game {
                     break;
                 }
             }
-        }
-        if (!suitFound) {
-            int randomPlayerIndex = (int) (Math.random() * numberOfPlayers);
-            Hand randomPlayerHand = hands[randomPlayerIndex];
-            int randomCardIndex = (int) (Math.random() * randomPlayerHand.getSize());
-            Card randomCard = randomPlayerHand.removeCard(randomCardIndex);
-            System.out.println("No player has a card of the suit " + suit + ". Player " + (randomPlayerIndex + 1) + " plays " + randomCard.getRank() + "-" + randomCard.getSuit() + ".");
+            if (!suitFound) {
+                int randomCardIndex = (int) (Math.random() * hand.getSize());
+                Card randomCard = hand.removeCard(randomCardIndex);
+                System.out.println("Player does not have a card in " + suit + ". Player " + (i + 1) + " plays " + randomCard.getRank() + "-" + randomCard.getSuit() + ".");
+            }
         }
     }
+
+    public void iterator(Hand[] hands) {
+        for (int i = 0; i < numberOfPlayers; i++) {
+            System.out.print("Player " + (i + 1) + ": ");
+            Hand hand = hands[i];
+            for (int j = hand.getSize() - 1; j >= 0; j--) {
+                Card card = hand.getCard(j);
+                System.out.print(card.getRank() + "-" + card.getSuit() + ", ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
 }
-class Runner {
+class Execution {
     public static void main(String[] args) {
         Game game = new Game(4);
         game.play();
