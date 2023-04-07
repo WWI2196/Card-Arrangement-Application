@@ -19,9 +19,9 @@ public class Deck {
         Random random = new Random();
         for (int i = 0; i < size; i++) {
             int j = random.nextInt(size);
-            Card temp = cards[i];
+            Card card = cards[i];
             cards[i] = cards[j];
-            cards[j] = temp;
+            cards[j] = card;
         }
     }
 

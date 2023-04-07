@@ -18,11 +18,6 @@ public class Game {
         deck.shuffle();
         int numberOfCards = deck.size / numberOfPlayers;
         String[][] suitsReceived = new String[numberOfPlayers][];
-        Hand[] hands = new Hand[numberOfPlayers];
-
-        for (int i = 0; i < numberOfPlayers; i++) {
-            hands[i] = new Hand();
-        }
 
         for (int i = 0; i < numberOfCards; i++) {
             for (int j = 0; j < numberOfPlayers; j++) {
@@ -141,7 +136,7 @@ public class Game {
         for (int i = 0; i < numberOfPlayers; i++) {
             System.out.print("Player " + (i + 1) + ": ");
             Hand hand = hands[i];
-            for (int j = hand.getSize() - 1; j >= 0; j--) {
+            for (int j = 0; j < hand.getSize(); j++) {
                 Card card = hand.getCard(j);
                 System.out.print(card.getRank() + "-" + card.getSuit() + ", ");
             }
