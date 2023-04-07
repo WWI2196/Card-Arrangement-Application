@@ -29,16 +29,16 @@ public class Game {
                         suitsReceived[j] = new String[]{suit};
                     } else {
                         int index = -1;
-                        for (int e = 0; e < suitsReceived[j].length; e++) {
-                            if (suit.equals(suitsReceived[j][e])) {
-                                index = e;
+                        for (int m = 0; m < suitsReceived[j].length; m++) {
+                            if (suit.equals(suitsReceived[j][m])) {
+                                index = m;
                                 break;
                             }
                         }
                         if (index == -1) {
                             String[] newSuitsReceived = new String[suitsReceived[j].length + 1];
-                            for (int q = 0; q < suitsReceived[j].length; q++) {
-                                newSuitsReceived[q] = suitsReceived[j][q];
+                            for (int n = 0; n < suitsReceived[j].length; n++) {
+                                newSuitsReceived[n] = suitsReceived[j][n];
                             }
                             newSuitsReceived[newSuitsReceived.length - 1] = suit;
                             suitsReceived[j] = newSuitsReceived;
