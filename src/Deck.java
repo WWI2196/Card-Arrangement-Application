@@ -20,10 +20,10 @@ public class Deck {
         int shuffles = size * (random.nextInt(9)+random.nextInt(9));
         for (int i = 0; i < shuffles; i++) {
             int j = random.nextInt(size);
-            int k = random.nextInt(size);
+            int n = random.nextInt(size);
             Card card = cards[j];
-            cards[j] = cards[k];
-            cards[k] = card;
+            cards[j] = cards[n];
+            cards[n] = card;
         }
     }
 

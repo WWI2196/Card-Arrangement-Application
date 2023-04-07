@@ -29,16 +29,16 @@ public class Game {
                         suitsReceived[j] = new String[]{suit};
                     } else {
                         int index = -1;
-                        for (int k = 0; k < suitsReceived[j].length; k++) {
-                            if (suit.equals(suitsReceived[j][k])) {
-                                index = k;
+                        for (int e = 0; e < suitsReceived[j].length; e++) {
+                            if (suit.equals(suitsReceived[j][e])) {
+                                index = e;
                                 break;
                             }
                         }
                         if (index == -1) {
                             String[] newSuitsReceived = new String[suitsReceived[j].length + 1];
-                            for (int k = 0; k < suitsReceived[j].length; k++) {
-                                newSuitsReceived[k] = suitsReceived[j][k];
+                            for (int q = 0; q < suitsReceived[j].length; q++) {
+                                newSuitsReceived[q] = suitsReceived[j][q];
                             }
                             newSuitsReceived[newSuitsReceived.length - 1] = suit;
                             suitsReceived[j] = newSuitsReceived;
@@ -94,8 +94,8 @@ public class Game {
             }
             for (String suit : order) {
                 for (int j = 2; j <= 14; j++) {
-                    for (int k = 0; k < hand.getSize(); k++) {
-                        Card card = hand.getCard(k);
+                    for (int m = 0; m < hand.getSize(); m++) {
+                        Card card = hand.getCard(m);
                         if (card.getSuit().equals(suit) && card.getRank() == j) {
                             sortedCards[index++] = card;
                         }
