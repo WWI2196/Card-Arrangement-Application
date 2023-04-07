@@ -56,16 +56,19 @@ public class Game {
             System.out.println("""
                     Enter your choice:
                     1. play a card
-                    2. suit iterator
-                    3. exit""");
+                    2. iterator
+                    3. suit iterator
+                    4. exit""");
             int choice = scanner.nextInt();
             scanner.nextLine();
-            if (choice == 3) {
+            if (choice==4) {
                 break;
-            } else if (choice == 2) {
+            }else if (choice == 3) {
                 System.out.print("Enter the suit to iterate: ");
                 String suit = scanner.nextLine();
                 suitIterator(suit, hands);
+            } else if (choice == 2) {
+                iterator(hands);
             }else if (choice == 1) {
                 do {
                     System.out.print("Enter the suit to play: ");
@@ -77,7 +80,6 @@ public class Game {
                         break;
                     }
                 }while (true);
-
             }
         }while (true);
     }
