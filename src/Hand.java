@@ -11,23 +11,26 @@ public class Hand {
         }
     }
 
-    private final CardHolder[] suits;
-    private final int[] cardsInSuit;
+    private CardHolder firstCard;
     private int cardsInHand;
 
     public Hand() {
-        this.suits = new CardHolder[4];
-        this.cardsInSuit = new int[4];
+        this.firstCard = null;
         this.cardsInHand = 0;
     }
 
     public void addACard(int rank, String suit) {
         Card card = new Card(rank, suit);
-        int suitIndex = getSuitIndex(suit);
         CardHolder newHolder = new CardHolder(card);
-        newHolder.next = suits[suitIndex];
-        suits[suitIndex] = newHolder;
-        cardsInSuit[suitIndex]++;
+        if (firstCard == null) {
+            firstCard = newHolder;
+        } else {
+            CardHolder current = firstCard;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newHolder;
+        }
         cardsInHand++;
     }
 
@@ -39,12 +42,7 @@ public class Hand {
         if (index < 0 || index >= cardsInHand) {
             throw new NoSuchElementException();
         }
-        int suitIndex = 0;
-        while (index >= cardsInSuit[suitIndex]) {
-            index -= cardsInSuit[suitIndex];
-            suitIndex++;
-        }
-        CardHolder current = suits[suitIndex];
+        CardHolder current = firstCard;
         for (int i = 0; i < index; i++) {
             current = current.next;
         }
@@ -55,34 +53,18 @@ public class Hand {
         if (index < 0 || index >= cardsInHand) {
             throw new NoSuchElementException();
         }
-        int suitIndex = 0;
-        while (index >= cardsInSuit[suitIndex]) {
-            index -= cardsInSuit[suitIndex];
-            suitIndex++;
-        }
         CardHolder previous = null;
-        CardHolder current = suits[suitIndex];
+        CardHolder current = firstCard;
         for (int i = 0; i < index; i++) {
             previous = current;
             current = current.next;
         }
         if (previous == null) {
-            suits[suitIndex] = current.next;
+            firstCard = current.next;
         } else {
             previous.next = current.next;
         }
-        cardsInSuit[suitIndex]--;
         cardsInHand--;
         return current.card;
-    }
-
-    public int getSuitIndex(String suit) {
-        return switch (suit) {
-            case "Hearts" -> 0;
-            case "Clubs" -> 1;
-            case "Spades" -> 2;
-            case "Diamonds" -> 3;
-            default -> -1;
-        };
     }
 }

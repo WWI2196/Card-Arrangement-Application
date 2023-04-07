@@ -17,11 +17,13 @@ public class Deck {
 
     public void shuffle() {
         Random random = new Random();
-        for (int i = 0; i < size; i++) {
+        int shuffles = size * (random.nextInt(9)+random.nextInt(9));
+        for (int i = 0; i < shuffles; i++) {
             int j = random.nextInt(size);
-            Card card = cards[i];
-            cards[i] = cards[j];
-            cards[j] = card;
+            int k = random.nextInt(size);
+            Card card = cards[j];
+            cards[j] = cards[k];
+            cards[k] = card;
         }
     }
 

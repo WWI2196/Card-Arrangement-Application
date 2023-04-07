@@ -104,7 +104,7 @@ public class Game {
             }
             for (int j = 0; j < index; j++) {
                 Card card = sortedCards[j];
-                System.out.print(card.getRank() + "-" + card.getSuit() + ", ");
+                System.out.print(card.RankToString() + "-" + card.getSuit() + ", ");
             }
             System.out.println();
         }
@@ -120,14 +120,14 @@ public class Game {
                 if (card.getSuit().equals(suit)) {
                     suitExist = true;
                     hand.removeCard(j);
-                    System.out.println("Player " + (i + 1) + " plays " + card.getRank() + "-" + card.getSuit() + ".");
+                    System.out.println("Player " + (i + 1) + " plays " + card.RankToString() + "-" + card.getSuit() + ".");
                     break;
                 }
             }
             if (!suitExist) {
                 int randomCardIndex = (int) (Math.random() * hand.getSize());
                 Card randomCard = hand.removeCard(randomCardIndex);
-                System.out.println("Player does not have a card in " + suit + ". Player " + (i + 1) + " plays " + randomCard.getRank() + "-" + randomCard.getSuit() + ".");
+                System.out.println("Player does not have a card in " + suit + ". Player " + (i + 1) + " plays " + randomCard.RankToString() + "-" + randomCard.getSuit() + ".");
             }
         }
     }
@@ -138,7 +138,7 @@ public class Game {
             Hand hand = hands[i];
             for (int j = 0; j < hand.getSize(); j++) {
                 Card card = hand.getCard(j);
-                System.out.print(card.getRank() + "-" + card.getSuit() + ", ");
+                System.out.print(card.RankToString() + "-" + card.getSuit() + ", ");
             }
             System.out.println();
         }
@@ -152,7 +152,7 @@ public class Game {
             for (int j = hand.getSize() - 1; j >= 0; j--) {
                 Card card = hand.getCard(j);
                 if (card.getSuit().equals(suit)) {
-                    System.out.print(card.getRank() + "-" + card.getSuit() + ", ");
+                    System.out.print(card.RankToString() + "-" + card.getSuit() + ", ");
                 }
             }
             System.out.println();
